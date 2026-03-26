@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hushh Trust Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button id="closeSidebar" class="close-sidebar-btn">✕</button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="#analytics" class="nav-item" data-section="analytics">
+                <span class="nav-icon">📈</span>
+                <span class="nav-label">Analytics</span>
+            </a>
+            <a href="#audit-logs" class="nav-item" data-section="audit-logs">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Audit Logs</span>
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Settings</span>
+            </a>
+            <a href="#integrations" class="nav-item" data-section="integrations">
+                <span class="nav-icon">🔗</span>
+                <span class="nav-label">Integrations</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <p>Trust Dashboard v1.0</p>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <div class="dashboard-container">
+        <header>
+            <div class="header-top">
+                <div class="header-left">
+                    <button id="sidebarToggle" class="sidebar-toggle-btn" title="Toggle Sidebar">☰</button>
+                    <div>
+                        <h1>Trust Dashboard</h1>
+                        <p>Manage your data relationships with transparent control.</p>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <button id="themeToggle" class="theme-btn" title="Toggle Dark/Light Theme">🌙</button>
+                    <button id="guideBtn" class="guide-btn" title="Help & Guide">ℹ️</button>
+                    <button id="notificationBtn" class="notification-btn" title="Notifications">🔔</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- User Guide Modal -->
+        <div id="guideModal" class="guide-modal">
+            <div class="guide-overlay"></div>
+            <div class="guide-container">
+                <button id="closeGuide" class="close-guide-btn">✕</button>
+                
+                <div class="guide-header">
+                    <h2>Dashboard Guide</h2>
+                    <p class="guide-subtitle">Learn how to manage your data trust</p>
+                </div>
+
+                <div class="guide-content">
+                    <div class="guide-step active" data-step="1">
+                        <div class="step-icon">✨</div>
+                        <h3>Welcome to Your Dashboard</h3>
+                        <p><strong>Your Trust Dashboard</strong> helps you:</p>
+                        <ul>
+                            <li>Monitor your overall data protection</li>
+                            <li>Manage permissions with granular control</li>
+                            <li>Track connected services and integrations</li>
+                            <li>View security and audit metrics</li>
+                        </ul>
+                        <p style="margin-top: 12px; font-style: italic; font-size: 0.9rem;">This guide will walk you through each feature. Press Next to continue →</p>
+                    </div>
+
+                    <div class="guide-step" data-step="2">
+                        <div class="step-icon">📊</div>
+                        <h3>1. Trust Score Overview</h3>
+                        <p>The <strong>Trust Score</strong> is your primary security metric (currently <strong>78%</strong>).</p>
+                        <p><strong>Score Ranges:</strong></p>
+                        <ul>
+                            <li>🟢 90-100: Excellent protection</li>
+                            <li>🟡 70-89: Good protection</li>
+                            <li>🔴 Below 70: Review settings needed</li>
+                        </ul>
+                        <p><strong>Score Factors:</strong> Permissions, service status, data security, compliance</p>
+                    </div>
+
+                    <div class="guide-step" data-step="3">
+                        <div class="step-icon">🛡️</div>
+                        <h3>2. Safety & Auditability Metrics</h3>
+                        <p><strong>Two Key Indicators:</strong></p>
+                        <ul>
+                            <li><strong>Safety (92%):</strong> Encryption enabled, access controls, compliance active</li>
+                            <li><strong>Auditability (85%):</strong> Full audit logs, 90-day retention, real-time monitoring</li>
+                        </ul>
+                        <p>These scores show your current security and compliance posture in real-time.</p>
+                    </div>
+
+                    <div class="guide-step" data-step="4">
+                        <div class="step-icon">🔐</div>
+                        <h3>3. Permission Management</h3>
+                        <p><strong>Control What Data Services Can Access:</strong></p>
+                        <ul>
+                            <li>Profile Data - Personal information</li>
+                            <li>Analytics - Behavioral tracking</li>
+                            <li>Location - Geographic access</li>
+                            <li>Notifications - Alert permissions</li>
+                        </ul>
+                        <p><strong>Note:</strong> Each toggle updates your Trust Score automatically.</p>
+                    </div>
+
+                    <div class="guide-step" data-step="5">
+                        <div class="step-icon">🔗</div>
+                        <h3>4. Connected Services</h3>
+                        <p><strong>Service Status Indicators:</strong></p>
+                        <ul>
+                            <li>🟢 <strong>Active:</strong> Connected & operational</li>
+                            <li>🟡 <strong>Pending:</strong> Awaiting setup/authorization</li>
+                            <li>⚫ <strong>Inactive:</strong> Disconnected from account</li>
+                        </ul>
+                        <p>Click services to manage connections and integrations.</p>
+                    </div>
+                </div>
+
+                <div class="guide-controls">
+                    <button id="prevStep" class="guide-nav-btn prev">← Previous</button>
+                    <div class="step-indicators">
+                        <span class="dot active" data-step="1"></span>
+                        <span class="dot" data-step="2"></span>
+                        <span class="dot" data-step="3"></span>
+                        <span class="dot" data-step="4"></span>
+                        <span class="dot" data-step="5"></span>
+                    </div>
+                    <button id="nextStep" class="guide-nav-btn next">Next →</button>
+                </div>
+
+                <p class="guide-footer">Step <span id="currentStep">1</span> of 5</p>
+            </div>
+        </div>
+
+
+        <!-- Notification Modal -->
+        <div id="notificationModal" class="notification-modal">
+            <div id="notificationOverlay" class="notification-overlay"></div>
+            <div class="notification-container">
+                <button id="closeNotification" class="close-notification-btn">✕</button>
+                <div class="notification-header">
+                    <h2>Notifications</h2>
+                    <span id="notificationBadge" class="notification-badge"></span>
+                </div>
+                <div class="notification-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="success">Success</button>
+                    <button class="filter-btn" data-filter="warning">Warnings</button>
+                    <button class="filter-btn" data-filter="info">Info</button>
+                    <button class="filter-btn" data-filter="error">Errors</button>
+                </div>
+                <div id="notificationList" class="notification-list">
+                    <!-- Notifications will be loaded here by JavaScript -->
+                    <p class="empty-state">No new notifications</p>
+                </div>
+                <div class="notification-actions">
+                    <button id="markAllReadBtn" class="action-btn">Mark All as Read</button>
+                    <button id="clearAllBtn" class="action-btn clear">Clear All</button>
+                </div>
+            </div>
+        </div>
+
+
+        <main>
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="section-content">
+                <h2>Trust Score</h2>
+                <div class="trust-score-container">
+                    <div class="circular-progress">
+                        <svg viewBox="0 0 120 120">
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#4ade80;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="60" cy="60" r="54" class="progress-circle"></circle>
+                            <circle cx="60" cy="60" r="54" class="progress-circle-fill" style="stroke-dashoffset: 60;"></circle>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-number">78</span>
+                            <span class="score-label">%</span>
+                        </div>
+                    </div>
+                    <div class="trust-info">
+                        <p><strong>Overall Trust Rating</strong></p>
+                        <p>Your data is safely managed across 3 services with 75% permissions enabled.</p>
+                        <div class="score-breakdown">
+                            <div class="breakdown-item">
+                                <span>Permissions</span>
+                                <div class="mini-bar"><div class="mini-fill" style="width: 75%"></div></div>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Service Status</span>
+                                <div class="mini-bar"><div class="mini-fill" style="width: 66%"></div></div>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Data Security</span>
+                                <div class="mini-bar"><div class="mini-fill" style="width: 88%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="indicators-grid">
+                <section class="card glass-effect indicator-card">
+                    <div class="indicator-header">
+                        <h3>Safety</h3>
+                        <div class="indicator-badge safety">🛡️</div>
+                    </div>
+                    <div class="indicator-content">
+                        <div class="indicator-bar">
+                            <div class="indicator-fill" style="width: 92%"></div>
+                        </div>
+                        <span class="indicator-score">92%</span>
+                        <ul class="indicator-list">
+                            <li><span class="check-mark">✓</span> Encryption enabled</li>
+                            <li><span class="check-mark">✓</span> Data at rest protected</li>
+                            <li><span class="check-mark">✓</span> No unauthorized access</li>
+                            <li><span class="check-mark">✓</span> Compliance active</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="card glass-effect indicator-card">
+                    <div class="indicator-header">
+                        <h3>Auditability</h3>
+                        <div class="indicator-badge audit">📋</div>
+                    </div>
+                    <div class="indicator-content">
+                        <div class="indicator-bar">
+                            <div class="indicator-fill" style="width: 85%"></div>
+                        </div>
+                        <span class="indicator-score">85%</span>
+                        <ul class="indicator-list">
+                            <li><span class="check-mark">✓</span> Full audit logs</li>
+                            <li><span class="check-mark">✓</span> 90-day retention</li>
+                            <li><span class="warn-mark">⚠</span> 2 pending reviews</li>
+                            <li><span class="check-mark">✓</span> Real-time monitoring</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <div class="grid-layout">
+            <section class="card glass-effect">
+                <h2>Permissions</h2>
+                <div class="permission-item">
+                    <span>Profile Data</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="permission-item">
+                    <span>Analytics</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="permission-item">
+                    <span>Location</span>
+                    <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="permission-item">
+                    <span>Notifications</span>
+                    <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+            </section>
+
+            <section class="card glass-effect">
+                <h2>Connected Services</h2>
+                <div class="service-row">
+                    <div class="icon">💼</div>
+                    <div class="service-info">
+                        <strong>CRM</strong>
+                        <p>Status: <span class="status-active">Active</span></p>
+                    </div>
+                </div>
+                <div class="service-row">
+                    <div class="icon">✉️</div>
+                    <div class="service-info">
+                        <strong>Email</strong>
+                        <p>Status: <span class="status-pending">Pending</span></p>
+                    </div>
+                </div>
+                <div class="service-row">
+                    <div class="icon">💳</div>
+                    <div class="service-info">
+                        <strong>Billing</strong>
+                        <p>Status: <span class="status-active">Active</span></p>
+                    </div>
+                </div>
+            </section>
+            </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="section-content hidden">
+                <h2>📈 Analytics Dashboard</h2>
+                <div class="analytics-grid">
+                    <div class="card glass-effect analytics-card">
+                        <h3>Trust Score Trend</h3>
+                        <div class="chart-container">
+                            <div class="mini-chart">
+                                <div class="chart-bar" style="height: 40%"></div>
+                                <div class="chart-bar" style="height: 55%"></div>
+                                <div class="chart-bar" style="height: 68%"></div>
+                                <div class="chart-bar" style="height: 72%"></div>
+                                <div class="chart-bar" style="height: 78%"></div>
+                            </div>
+                        </div>
+                        <p class="chart-label">Last 5 weeks trend</p>
+                    </div>
+
+                    <div class="card glass-effect analytics-card">
+                        <h3>Permission Usage</h3>
+                        <div class="stat-item">
+                            <span>Profile Data</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 75%"></div></div>
+                            <span class="stat-value">75%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Analytics</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 60%"></div></div>
+                            <span class="stat-value">60%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Location</span>
+                            <div class="stat-bar"><div class="stat-fill" style="width: 25%"></div></div>
+                            <span class="stat-value">25%</span>
+                        </div>
+                    </div>
+
+                    <div class="card glass-effect analytics-card">
+                        <h3>Service Health</h3>
+                        <div class="health-item">
+                            <span class="health-dot active"></span>
+                            <span>CRM</span>
+                            <span class="health-status">Healthy</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-dot active"></span>
+                            <span>Email</span>
+                            <span class="health-status">Healthy</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-dot active"></span>
+                            <span>Billing</span>
+                            <span class="health-status">Healthy</span>
+                        </div>
+                    </div>
+
+                    <div class="card glass-effect analytics-card">
+                        <h3>Key Metrics</h3>
+                        <div class="metric">
+                            <span class="metric-label">Active Integrations</span>
+                            <span class="metric-value">3</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total Permissions</span>
+                            <span class="metric-value">4</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Security Score</span>
+                            <span class="metric-value">92%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Last Updated</span>
+                            <span class="metric-value">2 mins ago</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Audit Logs Section -->
+            <section id="audit-logs-section" class="section-content hidden">
+                <h2>📋 Audit Logs</h2>
+                <div class="logs-container">
+                    <div class="log-entry">
+                        <div class="log-time">Today, 2:45 PM</div>
+                        <div class="log-content">
+                            <span class="log-action success">✓ Permission Enabled</span>
+                            <span class="log-description">Profile Data permission enabled for Analytics Service</span>
+                            <span class="log-user">by You</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-time">Today, 1:30 PM</div>
+                        <div class="log-content">
+                            <span class="log-action info">ℹ Settings Updated</span>
+                            <span class="log-description">Trust score threshold changed to 75%</span>
+                            <span class="log-user">by You</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-time">Today, 12:15 PM</div>
+                        <div class="log-content">
+                            <span class="log-action success">✓ Service Connected</span>
+                            <span class="log-description">CRM service successfully connected and authorized</span>
+                            <span class="log-user">by You</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-time">Yesterday, 8:45 PM</div>
+                        <div class="log-content">
+                            <span class="log-action warning">⚠ Permission Disabled</span>
+                            <span class="log-description">Location permission disabled for privacy</span>
+                            <span class="log-user">by You</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-time">Yesterday, 3:20 PM</div>
+                        <div class="log-content">
+                            <span class="log-action success">✓ Login Successful</span>
+                            <span class="log-description">Logged in from 192.168.1.100 (Chrome, Windows)</span>
+                            <span class="log-user">by You</span>
+                        </div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-time">3 days ago, 10:00 AM</div>
+                        <div class="log-content">
+                            <span class="log-action error">✗ Failed Login Attempt</span>
+                            <span class="log-description">Failed authentication attempt from unknown IP</span>
+                            <span class="log-user">Unknown</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
